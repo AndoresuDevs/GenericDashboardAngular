@@ -4,11 +4,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
-import MyPreset from './themes/sky-preset';
-import Aura from '@primeng/themes/aura';
-import Nora from '@primeng/themes/nora';
-import Material from '@primeng/themes/material';
-import Lara from '@primeng/themes/lara';
+import MyPreset from './themes/my-preset';
 
 export const appConfig: ApplicationConfig = {
   providers: [
