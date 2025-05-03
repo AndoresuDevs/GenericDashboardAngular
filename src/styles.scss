@@ -1,3 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'bootstrap/dist/css/bootstrap.min.css';
 @import "primeicons/primeicons.css";
+
+// Transicion entre modo claro y obscuro
+:root,
+.dark-mode {
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+body {
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
