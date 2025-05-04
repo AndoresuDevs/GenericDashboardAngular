@@ -16,11 +16,9 @@
 <!-- LEFT SIDEBAR -->
 <div class="card flex justify-center">
     <p-drawer [(visible)]="visible" header="Drawer">
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-            et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
-        </p>
+        <div class="flex justify-center">
+            <p-panelmenu [model]="items" styleClass="w-full md:w-80" />
+        </div>
     </p-drawer>
     
 </div>
@@ -28,4 +26,6 @@
 <div class="p-2">
     <router-outlet />
 </div>
+
+<p-toast />
 
