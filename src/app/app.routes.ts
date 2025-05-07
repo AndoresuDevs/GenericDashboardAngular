@@ -5,6 +5,12 @@ import { HomeComponent } from './features/home/home.component';
 import { InventoryComponent } from './features/inventory/inventory.component';
 
 export const routes: Routes = [
+    // Rutas de redireccionamiento
+    {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+    },
     //Rutas Auth sin layout
     {
         path: 'login',
@@ -56,12 +62,6 @@ export const routes: Routes = [
                 ]
             },
         ]
-    },
-    // Rutas de redireccionamiento
-    {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
     },
     // Rutas de error
     { 
