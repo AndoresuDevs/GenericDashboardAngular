@@ -40,60 +40,80 @@ export class MainLayoutComponent {
     private toast: ToastService,
 ) {
     this.items = [
-      {
-          label: 'Files',
-          icon: 'pi pi-file',
-          items: [
-            {
-                label: 'New',
-                icon: 'pi pi-plus',
-                command: () => {
-                    this.toast.success('Guardado', 'Los datos se guardaron correctamente.');
-                }
-            },
-            {
-                label: 'Search',
-                icon: 'pi pi-search',
-                command: () => {
-                    this.toast.warn('Guardado', 'Los datos se guardaron correctamente.');
-                }
-            },
-            {
-                label: 'Print',
-                icon: 'pi pi-print',
-                command: () => {
-                    this.toast.error('Guardado', 'Los datos se guardaron correctamente.');
-                }
+        {
+            label:'Home',
+            icon: 'pi pi-fw pi-home',
+            command: () => {
+                this.router.navigate(['/home']);
+                this.visible = false;
             }
-          ]
-      },
-      {
-          label: 'Sync',
-          icon: 'pi pi-cloud',
-          items: [
-              {
-                  label: 'Import',
-                  icon: 'pi pi-cloud-download',
-                  command: () => {
-                      this.toast.info('Guardado', 'Los datos se guardaron correctamente.');
-                  }
-              },
-              {
-                  label: 'Export',
-                  icon: 'pi pi-cloud-upload',
-                  command: () => {
-                      this.toast.info('Guardado', 'Los datos se guardaron correctamente.');
-                  }
-              }
-          ]
-      },
-      {
-          label: 'Sign Out',
-          icon: 'pi pi-sign-out',
-          command: () => {
-              this.toast.error('Guardado', 'Los datos se guardaron correctamente.');
-          }
-      }
+        },
+        {
+            label: 'Files',
+            icon: 'pi pi-file',
+            items: [
+                {
+                    label: 'New',
+                    icon: 'pi pi-plus',
+                    command: () => {
+                        this.toast.success('Guardado', 'Los datos se guardaron correctamente.');
+                        this.router.navigate(['/management/users']);
+                        this.visible = false;
+                    }
+                },
+                {
+                    label: 'Search',
+                    icon: 'pi pi-search',
+                    command: () => {
+                        this.toast.warn('Guardado', 'Los datos se guardaron correctamente.');
+                        this.router.navigate(['/management/roles']);
+                        this.visible = false;
+                    }
+                },
+                {
+                    label: 'Print',
+                    icon: 'pi pi-print',
+                    command: () => {
+                        this.toast.error('Guardado', 'Los datos se guardaron correctamente.');
+                        this.router.navigate(['/management/categories']);
+                        this.visible = false;
+                    }
+                }
+            ]
+        },
+        {
+            label: 'Sync',
+            icon: 'pi pi-cloud',
+            items: [
+                {
+                    label: 'Import',
+                    icon: 'pi pi-cloud-download',
+                    command: () => {
+                        this.toast.info('Guardado', 'Los datos se guardaron correctamente.');
+                        this.router.navigate(['/sales']);
+                        this.visible = false;
+                    }
+                },
+                {
+                    label: 'Export',
+                    icon: 'pi pi-cloud-upload',
+                    command: () => {
+                        this.toast.info('Guardado', 'Los datos se guardaron correctamente.');
+                        this.router.navigate(['/inventory']);
+                        this.visible = false;
+                    }
+                }
+            ]
+        },
+        {
+            label: 'Sign Out',
+            icon: 'pi pi-sign-out',
+            command: () => {
+                this.toast.error('Guardado', 'Los datos se guardaron correctamente.');
+                this.router.navigate(['/home']);
+                this.visible = false;
+            }
+        }
   ];
   }
 
