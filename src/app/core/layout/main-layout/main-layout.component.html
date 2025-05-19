@@ -1,28 +1,26 @@
 <!-- TOOLBAR -->
-<p-toolbar [style]="{ 'border-radius': '0rem'}">
-    <ng-template #start>
-        <p-button (click)="visible = true" icon="pi pi-bars" />
-        <p-button icon="pi pi-print" class="mr-2" text severity="secondary" />
-        <p-button icon="pi pi-upload" text severity="secondary" />
-    </ng-template>
-    <ng-template #center>
-       
-    </ng-template>
-    <ng-template #end>
-        <p-button (click)="toggleTheme()" icon="pi pi-moon" label="Dark Mode" class="mr-2"></p-button>
-    </ng-template>
-</p-toolbar>
-
-<!-- LEFT SIDEBAR -->
-<div class="card flex justify-center">
-    <p-drawer [(visible)]="visible" header="Drawer">
-        <div class="flex justify-center">
-            <p-panelmenu [model]="items" styleClass="w-full md:w-80" />
-        </div>
-    </p-drawer>
+<div class="toolbar" [class.shifted]="drawerOpen">
+    <div class="start-content">
+        <p-button (click)="toggleDrawer()" icon="pi pi-bars" />
+        <p-button icon="pi pi-print" class="ml-2" text severity="secondary" />
+        <p-button icon="pi pi-upload" class="ml-2" text severity="secondary" />
+    </div>
+    <div class="end-content">
+        <p-button (click)="toggleTheme()" icon="pi pi-moon" label="Dark Mode"></p-button>
+    </div>
 </div>
 
-<div class="p-2">
-    <router-outlet />
+<!-- LEFT SIDEBAR -->
+<p-card class="drawer" [class.open]="drawerOpen">
+    <div class="flex justify-center">
+        <p-panelmenu [model]="items" styleClass="w-full md:w-80" />
+    </div>
+</p-card>
+
+<!-- MAIN CONTENT -->
+<div class="main-content" [class.shifted]="drawerOpen">
+    <div class="p-2">
+        <router-outlet />
+    </div>
 </div>
 

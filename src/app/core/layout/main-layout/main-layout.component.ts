@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { ThemeService } from '../../services/theme/theme.service';
 import { ToastService } from '../../services/toast/toast.service';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-main-layout',
@@ -26,6 +27,7 @@ import { ToastService } from '../../services/toast/toast.service';
     InputTextModule,
     BreadcrumbModule,
     RouterModule,
+    CardModule,
   ],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss'
@@ -33,6 +35,7 @@ import { ToastService } from '../../services/toast/toast.service';
 export class MainLayoutComponent {
   visible: boolean = false;
   items: MenuItem[];
+  drawerOpen = false;
 
   constructor(
     private themeService: ThemeService, 
@@ -110,7 +113,7 @@ export class MainLayoutComponent {
             icon: 'pi pi-sign-out',
             command: () => {
                 this.toast.error('Guardado', 'Los datos se guardaron correctamente.');
-                this.router.navigate(['/home']);
+                this.toggleDrawer();
                 this.visible = false;
             }
         }
@@ -120,6 +123,10 @@ export class MainLayoutComponent {
   ngOnInit() {
     this.themeService.init();
     
+  }
+
+  toggleDrawer() {
+    this.drawerOpen = !this.drawerOpen;
   }
 
   toggleTheme() {
