@@ -12,6 +12,7 @@ import { ThemeService } from '../../services/theme/theme.service';
 import { ToastService } from '../../services/toast/toast.service';
 import { CardModule } from 'primeng/card';
 import { filter } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-main-layout',
@@ -33,6 +34,7 @@ export class MainLayoutComponent implements OnInit {
   drawerOpen = false;
   breadcrumbItems: MenuItem[] = [];
   home: MenuItem = { icon: 'pi pi-home', routerLink: '/home' };
+  projectName = environment.projectName;
 
   constructor(
     private themeService: ThemeService, 

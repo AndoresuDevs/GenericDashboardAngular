@@ -8,6 +8,20 @@
   z-index: 1001;
   transition: left 0.3s ease;
 
+  .drawer-header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--surface-border);
+    margin-bottom: 1rem;
+    
+    h2 {
+      margin: 0;
+      color: var(--primary-color);
+      font-size: 1.5rem;
+      text-align: center;
+      font-weight: 600;
+    }
+  }
+
   ::ng-deep .p-card {
     height: 100%;
     border-radius: 0;
