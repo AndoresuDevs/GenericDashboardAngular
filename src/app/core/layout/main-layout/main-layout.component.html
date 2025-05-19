@@ -4,14 +4,14 @@
         <p-button (click)="toggleDrawer()" icon="pi pi-bars" severity="secondary" text />
         <p-breadcrumb [model]="breadcrumbItems" [home]="home" styleClass="border-none surface-ground"></p-breadcrumb>
     </div>
-    <div class="end-content">
+    <!-- <div class="end-content">
         <p-button (click)="toggleTheme()" icon="pi pi-moon" label="Dark Mode"></p-button>
-    </div>
+    </div> -->
 </div>
 
 <!-- LEFT SIDEBAR -->
 <p-card class="drawer" [class.open]="drawerOpen">
-    <div class="flex justify-center">
+    <div class="flex justify-center p-2">
         <p-panelmenu [model]="items" styleClass="w-full md:w-80" />
     </div>
 </p-card>
