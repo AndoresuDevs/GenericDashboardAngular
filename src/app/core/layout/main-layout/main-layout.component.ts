@@ -4,15 +4,14 @@ import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { AvatarModule } from 'primeng/avatar';
 import { MenuItem } from 'primeng/api';
-import { Toolbar } from 'primeng/toolbar';
-import { InputTextModule } from 'primeng/inputtext';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { PanelMenu } from 'primeng/panelmenu';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { ThemeService } from '../../services/theme/theme.service';
 import { ToastService } from '../../services/toast/toast.service';
 import { CardModule } from 'primeng/card';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main-layout',
@@ -20,11 +19,8 @@ import { CardModule } from 'primeng/card';
     RouterOutlet,
     ButtonModule,
     DrawerModule,
-    AvatarModule, 
-    Toolbar, 
-    ButtonModule, 
+    AvatarModule,
     PanelMenu,
-    InputTextModule,
     BreadcrumbModule,
     RouterModule,
     CardModule,
@@ -32,97 +28,125 @@ import { CardModule } from 'primeng/card';
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss'
 })
-export class MainLayoutComponent {
-  visible: boolean = false;
+export class MainLayoutComponent implements OnInit {
   items: MenuItem[];
   drawerOpen = false;
+  breadcrumbItems: MenuItem[] = [];
+  home: MenuItem = { icon: 'pi pi-home', routerLink: '/home' };
 
   constructor(
     private themeService: ThemeService, 
     private router: Router, 
     private toast: ToastService,
-) {
+  ) {
     this.items = [
-        {
-            label:'Home',
-            icon: 'pi pi-fw pi-home',
-            command: () => {
-                this.router.navigate(['/home']);
-                this.visible = false;
-            }
-        },
-        {
-            label: 'Files',
-            icon: 'pi pi-file',
-            items: [
-                {
-                    label: 'New',
-                    icon: 'pi pi-plus',
-                    command: () => {
-                        this.toast.success('Guardado', 'Los datos se guardaron correctamente.');
-                        this.router.navigate(['/management/users']);
-                        this.visible = false;
-                    }
-                },
-                {
-                    label: 'Search',
-                    icon: 'pi pi-search',
-                    command: () => {
-                        this.toast.warn('Guardado', 'Los datos se guardaron correctamente.');
-                        this.router.navigate(['/management/roles']);
-                        this.visible = false;
-                    }
-                },
-                {
-                    label: 'Print',
-                    icon: 'pi pi-print',
-                    command: () => {
-                        this.toast.error('Guardado', 'Los datos se guardaron correctamente.');
-                        this.router.navigate(['/management/categories']);
-                        this.visible = false;
-                    }
-                }
-            ]
-        },
-        {
-            label: 'Sync',
-            icon: 'pi pi-cloud',
-            items: [
-                {
-                    label: 'Import',
-                    icon: 'pi pi-cloud-download',
-                    command: () => {
-                        this.toast.info('Guardado', 'Los datos se guardaron correctamente.');
-                        this.router.navigate(['/sales']);
-                        this.visible = false;
-                    }
-                },
-                {
-                    label: 'Export',
-                    icon: 'pi pi-cloud-upload',
-                    command: () => {
-                        this.toast.info('Guardado', 'Los datos se guardaron correctamente.');
-                        this.router.navigate(['/inventory']);
-                        this.visible = false;
-                    }
-                }
-            ]
-        },
-        {
-            label: 'Sign Out',
-            icon: 'pi pi-sign-out',
-            command: () => {
-                this.toast.error('Guardado', 'Los datos se guardaron correctamente.');
-                this.toggleDrawer();
-                this.visible = false;
-            }
+      {
+        label:'Home',
+        icon: 'pi pi-fw pi-home',
+        command: () => {
+          this.router.navigate(['/home']);
+          this.toggleDrawer();
         }
-  ];
+      },
+      {
+        label: 'Files',
+        icon: 'pi pi-file',
+        items: [
+          {
+            label: 'New',
+            icon: 'pi pi-plus',
+            command: () => {
+              this.toast.success('Navigating', 'Going to Users Management');
+              this.router.navigate(['/management/users']);
+              this.toggleDrawer();
+            }
+          },
+          {
+            label: 'Search',
+            icon: 'pi pi-search',
+            command: () => {
+              this.toast.info('Navigating', 'Going to Roles Management');
+              this.router.navigate(['/management/roles']);
+              this.toggleDrawer();
+            }
+          },
+          {
+            label: 'Print',
+            icon: 'pi pi-print',
+            command: () => {
+              this.toast.info('Navigating', 'Going to Categories Management');
+              this.router.navigate(['/management/categories']);
+              this.toggleDrawer();
+            }
+          }
+        ]
+      },
+      {
+        label: 'Sync',
+        icon: 'pi pi-cloud',
+        items: [
+          {
+            label: 'Import',
+            icon: 'pi pi-cloud-download',
+            command: () => {
+              this.toast.info('Navigating', 'Going to Sales');
+              this.router.navigate(['/sales']);
+              this.toggleDrawer();
+            }
+          },
+          {
+            label: 'Export',
+            icon: 'pi pi-cloud-upload',
+            command: () => {
+              this.toast.info('Navigating', 'Going to Inventory');
+              this.router.navigate(['/inventory']);
+              this.toggleDrawer();
+            }
+          }
+        ]
+      },
+      {
+        label: 'Sign Out',
+        icon: 'pi pi-sign-out',
+        command: () => {
+          this.toast.warn('Signing out', 'Goodbye!');
+          this.toggleDrawer();
+          // Add your sign out logic here
+        }
+      }
+    ];
+
+    // Subscribe to router events to update breadcrumb
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.updateBreadcrumb();
+      });
   }
 
   ngOnInit() {
     this.themeService.init();
+    this.updateBreadcrumb();
+  }
+
+  private updateBreadcrumb() {
+    const urlSegments = this.router.url.split('/').filter(segment => segment);
+    this.breadcrumbItems = [];
     
+    let path = '';
+    for (const segment of urlSegments) {
+      path += `/${segment}`;
+      this.breadcrumbItems.push({
+        label: this.formatBreadcrumbLabel(segment),
+        routerLink: path
+      });
+    }
+  }
+
+  private formatBreadcrumbLabel(segment: string): string {
+    return segment
+      .replace(/([A-Z])/g, ' $1')
+      .replace(/^./, str => str.toUpperCase());
   }
 
   toggleDrawer() {
