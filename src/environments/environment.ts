@@ -1,4 +1,5 @@
 export const environment = {
-    production: true,
-    projectName: 'AndoresuDevs ERP'
+    production: false,
+    projectName: 'AndoresuDevs ERP DEV',
+    useAuthGuard: false,
 };
