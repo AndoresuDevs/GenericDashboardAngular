@@ -13,6 +13,7 @@ import { ToastService } from '../../services/toast/toast.service';
 import { CardModule } from 'primeng/card';
 import { filter } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -40,6 +41,7 @@ export class MainLayoutComponent implements OnInit {
     private themeService: ThemeService, 
     private router: Router, 
     private toast: ToastService,
+    private authService: AuthService,
   ) {
     this.items = [
       {
@@ -111,8 +113,10 @@ export class MainLayoutComponent implements OnInit {
         label: 'Sign Out',
         icon: 'pi pi-sign-out',
         command: () => {
+          this.authService.logout();
           this.toast.warn('Signing out', 'Goodbye!');
           this.toggleDrawer();
+          this.router.navigate(['/login']);
           // Add your sign out logic here
         }
       }
