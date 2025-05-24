@@ -21,7 +21,7 @@ export class ThemeService {
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
     if (saved === 'dark' || (!saved && prefersDark)) {
-      this.setDarkMode(true, false);
+      this.setDarkMode(false, false); // Dark mode disabled by default
     } else {
       this.setDarkMode(false, false);
     }
