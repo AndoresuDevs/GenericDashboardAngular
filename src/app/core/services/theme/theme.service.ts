@@ -42,7 +42,7 @@ export class ThemeService {
 
     if (enable) {
       root.classList.add('dark-mode');
-      localStorage.setItem(this.storageKey, 'dark');
+      localStorage.setItem(this.storageKey, 'light');// set dark when re-enabled darkmode
       this.theme$.next('dark');
     } else {
       root.classList.remove('dark-mode');
